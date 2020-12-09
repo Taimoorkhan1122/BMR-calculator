@@ -21,7 +21,7 @@ function App() {
       case "age":
         return setState({ ...state, age: value });
       case "gender":
-        return setState({ ...state, gender: value });
+        return setState({ ...state, gender: +value });
       case "weight":
         return setState({ ...state, weight: value });
       case "heightFeet":
@@ -33,6 +33,17 @@ function App() {
       default:
         return console.log("unhandled value");
     }
+  };
+  const handleClick = () => {
+    const age = state.age;
+    const weight = state.weight;
+    const height = state.age;
+    // const age = state.age;
+    const BMR_Male = 66 + 6.2 * weight + 12.7 * height - 6.76 * age;
+    const BMR_Female = 655.1 + 4.35 * weight + 4.7 * height - 4.7 * age;
+    state.gender === 1
+      ? setState({ ...state, bmr: BMR_Male })
+      : setState({ ...state, bmr: BMR_Female });
   };
   return (
     <div id="bmrcalc">
@@ -47,7 +58,7 @@ function App() {
               name="gender"
               value="1"
               onChange={handleChange}
-              checked={state.gender === "1"}
+              checked={state.gender === 1}
             />
             Female
           </label>
@@ -58,7 +69,7 @@ function App() {
               name="gender"
               value="2"
               onChange={handleChange}
-              checked={state.gender === "2"}
+              checked={state.gender === 2}
             />
             Male
           </label>
@@ -108,8 +119,17 @@ function App() {
             value={state.age}
           />
         </div>
-        <button type="button">Calculate BMR</button>
-        <Activity handleChange={handleChange} state={state} />
+        <button type="button" onClick={handleClick}>
+          Calculate BMR
+        </button>
+        {state.bmr && (
+          <>
+            <div className="result">
+              <h3>{state.bmr.toFixed(3)}</h3>
+            </div>
+            <Activity handleChange={handleChange} state={state} />
+          </>
+        )}
       </div>
     </div>
   );
