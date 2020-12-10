@@ -48,8 +48,6 @@ function App() {
     ) {
       return setState({ ...state, error: true });
     }
-
-    setState({ ...state, error: false });
     const age = state.age;
     const weight = state.weight;
     const height = state.height;
@@ -69,8 +67,8 @@ function App() {
     }
 
     state.gender === 1
-      ? setState({ ...state, bmr: BMR_Male })
-      : setState({ ...state, bmr: BMR_Female });
+      ? setState({ ...state, bmr: BMR_Male, error: false })
+      : setState({ ...state, bmr: BMR_Female, error: false });
   };
   return (
     <div id="bmrcalc">
@@ -92,6 +90,7 @@ function App() {
               />{" "}
               Imperial
             </label>
+
             <label>
               <input
                 type="radio"
