@@ -6,7 +6,7 @@ body {
     padding: 0px;
     padding-top: 50px;
     margin: 0px;
-    background: #F4F1F1;
+    background: #eceeff;
     font-family: 'Open Sans', sans-serif;
     color:black;
     font-size: 15px;
@@ -27,18 +27,28 @@ div#bmrcalc {
     width: 600px;
     background: white;
     padding: 20px;
-    border: 1px solid #ffc5c5;
-    box-shadow: 0 1px 9px #cdb3b3;
+    border: 1px solid #494949;
+    box-shadow: 0 1px 9px #777777;
     border-radius: 5px;
     max-width: 100%;
     animation: slide-up 0.4s ease;
 }
+
+
 h2 {
     margin: 0px;
     text-align: center;
     font-size: 21px;
     text-transform: uppercase;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
+}
+
+h3 {
+    margin: 0px;
+    text-align: center;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
 }
 
 .inputwrap {
@@ -105,7 +115,7 @@ select {
     display: inline-block;
 }
 .result {
-    background: red;
+    background: rgba(0, 128, 0, 0.5);
     color: white;
     text-align: center;
     padding: 10px 0px;

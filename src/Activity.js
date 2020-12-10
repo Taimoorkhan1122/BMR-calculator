@@ -1,6 +1,11 @@
 import React from "react";
 
-export const Activity = ({ handleChange, state }) => {
+export const Activity = ({ handleChange, state, setState }) => {
+  const calculateCalories = () => {
+    const bmr = state.bmr;
+    const activity = state.activity;
+    setState({ ...state, calories: bmr * activity });
+  };
   return (
     <div className="workout">
       <div className="inputwrap">
@@ -9,8 +14,7 @@ export const Activity = ({ handleChange, state }) => {
           className="activity"
           name="activity"
           onChange={handleChange}
-          value={state.activity}
-        >
+          value={state.activity}>
           <option value="">Select your Activity</option>
           <option value="1.2">
             Sedentary (Very little or no exercise, and desk job)
@@ -30,7 +34,16 @@ export const Activity = ({ handleChange, state }) => {
           </option>
         </select>
       </div>
-      <button type="button">Calculate Calories</button>
+      <button type="button" onClick={calculateCalories}>
+        Calculate Calories
+      </button>
+      {state.calories && (
+        <div className="result">
+          <h3>
+            Daily kilocalories needed {state.calories.toFixed(2)} KCal/day
+          </h3>
+        </div>
+      )}
     </div>
   );
 };

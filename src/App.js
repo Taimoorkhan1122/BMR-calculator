@@ -12,6 +12,7 @@ function App() {
     height: "",
     activity: "",
     bmr: "",
+    calories: "",
   });
 
   const handleChange = (event) => {
@@ -72,29 +73,32 @@ function App() {
     <div id="bmrcalc">
       <div className="form">
         <h2>BMR &amp; Daily Calorie Calculator</h2>
+        <h3>By Taimoor khan</h3>
         <div className="inputwrap">
-          {/* select imperial or metric units */}
-          <label className="unit">Imperial</label>
-          <label>
-            <input
-              type="radio"
-              name="unit"
-              value="imperial"
-              c
-              onChange={handleChange}
-            />
-          </label>
-
-          <label className="unit">Metric</label>
-          <label>
-            <input
-              type="radio"
-              name="unit"
-              value="metric"
-              checked={state.unit === "metric"}
-              onChange={handleChange}
-            />
-          </label>
+          <div className="unit_select">
+            {/* select imperial or metric units */}
+            <label className="unit">Select Unit</label>
+            <label>
+              <input
+                type="radio"
+                name="unit"
+                value="imperial"
+                c
+                onChange={handleChange}
+              />{" "}
+              Imperial
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="unit"
+                value="metric"
+                checked={state.unit === "metric"}
+                onChange={handleChange}
+              />{" "}
+              Metric
+            </label>
+          </div>
 
           {/* Gender Select  */}
           <label className="unit">Gender</label>
@@ -106,7 +110,7 @@ function App() {
               value="1"
               onChange={handleChange}
               checked={state.gender === 1}
-            />
+            />{" "}
             Female
           </label>
           <label>
@@ -117,7 +121,7 @@ function App() {
               value="2"
               onChange={handleChange}
               checked={state.gender === 2}
-            />
+            />{" "}
             Male
           </label>
         </div>
@@ -179,7 +183,11 @@ function App() {
             <div className="result">
               <h3>{state.bmr.toFixed(3)}</h3>
             </div>
-            <Activity handleChange={handleChange} state={state} />
+            <Activity
+              handleChange={handleChange}
+              state={state}
+              setState={setState}
+            />
           </>
         )}
       </div>
