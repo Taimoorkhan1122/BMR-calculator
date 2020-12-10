@@ -4,11 +4,12 @@ import "./App.css";
 
 function App() {
   const [state, setState] = useState({
+    unit: "metric",
     age: "",
     gender: "",
     weight: "",
     heightFeet: "",
-    heightInches: "",
+    height: "",
     activity: "",
     bmr: "",
   });
@@ -18,6 +19,8 @@ function App() {
     const name = event.target.name;
     // handling input changes according to event name
     switch (name) {
+      case "unit":
+        return setState({ ...state, unit: value });
       case "age":
         return setState({ ...state, age: value });
       case "gender":
@@ -26,21 +29,41 @@ function App() {
         return setState({ ...state, weight: value });
       case "heightFeet":
         return setState({ ...state, heightFeet: value });
-      case "heightInches":
-        return setState({ ...state, heightInches: value });
+      case "height":
+        return setState({ ...state, height: value });
       case "activity":
         return setState({ ...state, activity: value });
       default:
         return console.log("unhandled value");
     }
   };
-  const handleClick = () => {
+  const calculateBMR = () => {
+    if (
+      state.age === "" ||
+      state.weight === "" ||
+      state.height === "" ||
+      state.gender === ""
+    ) {
+      return alert("All fields are required!");
+    }
     const age = state.age;
     const weight = state.weight;
-    const height = state.age;
+    const height = state.height;
     // const age = state.age;
-    const BMR_Male = 66 + 6.2 * weight + 12.7 * height - 6.76 * age;
-    const BMR_Female = 655.1 + 4.35 * weight + 4.7 * height - 4.7 * age;
+
+    let BMR_Male;
+    let BMR_Female;
+
+    if (state.unit === "imperial") {
+      //imperial calculation
+      BMR_Male = 66 + 6.2 * weight + 12.7 * height - 6.76 * age;
+      BMR_Female = 655.1 + 4.35 * weight + 4.7 * height - 4.7 * age;
+    } else {
+      // metric calculation
+      BMR_Male = 66.5 + 13.75 * weight + 5.003 * height - 6.755 * age;
+      BMR_Female = 655 + 9.563 * weight + 1.85 * height - 4.676 * age;
+    }
+
     state.gender === 1
       ? setState({ ...state, bmr: BMR_Male })
       : setState({ ...state, bmr: BMR_Female });
@@ -50,7 +73,31 @@ function App() {
       <div className="form">
         <h2>BMR &amp; Daily Calorie Calculator</h2>
         <div className="inputwrap">
-          <label className="label">Gender</label>
+          {/* select imperial or metric units */}
+          <label className="unit">Imperial</label>
+          <label>
+            <input
+              type="radio"
+              name="unit"
+              value="imperial"
+              c
+              onChange={handleChange}
+            />
+          </label>
+
+          <label className="unit">Metric</label>
+          <label>
+            <input
+              type="radio"
+              name="unit"
+              value="metric"
+              checked={state.unit === "metric"}
+              onChange={handleChange}
+            />
+          </label>
+
+          {/* Gender Select  */}
+          <label className="unit">Gender</label>
           <label>
             <input
               type="radio"
@@ -75,7 +122,9 @@ function App() {
           </label>
         </div>
         <div className="inputwrap">
-          <label className="label">Weight in Pounds</label>
+          <label className="label">
+            Weight in {state.unit === "metric" ? "Kg" : "pounds"}
+          </label>
           <input
             type="number"
             name="weight"
@@ -87,7 +136,10 @@ function App() {
           />
         </div>
         <div className="inputwrap">
-          <label className="label">Height in feet and inches</label>
+          <label className="label">
+            Height in{" "}
+            {state.unit === "metric" ? "feet and cm" : "feet and inches"}
+          </label>
           <input
             type="number"
             name="heightFeet"
@@ -99,12 +151,12 @@ function App() {
           />
           <input
             type="number"
-            name="heightInches"
-            className="heightInches"
+            name="height"
+            className="height"
             min="0"
             max="11"
             onChange={handleChange}
-            value={state.heightInches}
+            value={state.height}
           />
         </div>
         <div className="inputwrap">
@@ -119,7 +171,7 @@ function App() {
             value={state.age}
           />
         </div>
-        <button type="button" onClick={handleClick}>
+        <button type="button" onClick={calculateBMR}>
           Calculate BMR
         </button>
         {state.bmr && (
