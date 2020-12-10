@@ -13,6 +13,7 @@ function App() {
     activity: "",
     bmr: "",
     calories: "",
+    error: false,
   });
 
   const handleChange = (event) => {
@@ -45,8 +46,10 @@ function App() {
       state.height === "" ||
       state.gender === ""
     ) {
-      return alert("All fields are required!");
+      return setState({ ...state, error: true });
     }
+
+    setState({ ...state, error: false });
     const age = state.age;
     const weight = state.weight;
     const height = state.height;
@@ -75,6 +78,7 @@ function App() {
         <h2>BMR &amp; Daily Calorie Calculator</h2>
         <h3>By Taimoor khan</h3>
         <div className="inputwrap">
+          {state.error && <div className="error">All fields are required!</div>}
           <div className="unit_select">
             {/* select imperial or metric units */}
             <label className="unit">Select Unit</label>
